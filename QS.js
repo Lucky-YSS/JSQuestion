@@ -53,7 +53,7 @@ Alice有两个选择:擦掉数字1或2如果擦掉1数组变成[12]。剩余数�
   if((role == 'Alice' && res === 0) || (role == 'Blob' && res === false)) {
     console.log(true, `role:${role}-------result:${res}`)
   } else {
-    console.log(false)
+    // console.log(false)
   }
   
 }
@@ -115,7 +115,7 @@ Alice有两个选择:擦掉数字1或2如果擦掉1数组变成[12]。剩余数�
   }
   let numList = Generate(8);
   let index = getIndex(numList, 1211);
-  console.log(index)
+  // console.log(index)
 }
 
 // GAMES 2 END
@@ -147,6 +147,69 @@ Alice有两个选择:擦掉数字1或2如果擦掉1数组变成[12]。剩余数�
     return x_num + y_num
   }
 
-  console.log(getTagNum(5,3,2))
+  // console.log(getTagNum(5,3,2))
 }
 // GAMES 3 END
+
+// GAMES 4 START
+{
+  /* 
+  桌子上有n堆硬币，每堆的数量保存在数组coins中。我们每次可以选择任意一堆，拿走其中的一枚或者两枚，求拿完所有硬币的最少数
+  */
+ const getCounts = (coins) => {
+  let num = 0;
+  coins.forEach(i => i % 2 > 0 ? (num += parseInt(i / 2) + 1) : (num += parseInt(i / 2)))
+  return num;
+ }
+//  let res = getCounts([2,3,10])
+//  console.log('NO.4:',res)
+}
+// GAMES 4 END
+// GAMES 5 START
+{
+  /* 
+  给你一个下标从0开始的字符串word，字符串只包含小写英文字母，你需要选择一个下标并删除下标处的字符，是的word中剩余每个字母出现频率想同
+  如果删除一个字母后，word中剩余所有字母的出现频率都相同，那么返回true，否则返回false。
+  注意 字母x的频率是这个字母出现在字符串的次数；你必须恰好删除一个字母，不能一个字母都不删除。
+   */
+  const formatNums = (nums) => {
+    nums = nums.sort((a, b) => a - b)
+    let arr_f = [], arr_ = [];
+    nums.forEach(i => {
+      if(arr_f.length == 0 || arr_f[0] == i) {
+        arr_f.push(i);
+      } else {
+        arr_.push(arr_f)
+        arr_f = [i];
+      }
+    })
+    arr_.push(arr_f)
+    if (arr_.length > 2 || arr_.length == 1) {
+      return false;
+    } else {
+      let max, min, min_index;
+      if((arr_[0].length == 1 && arr_[0] == 1) || (arr_[1].length == 1 && arr_[1] == 1)) return true;
+      arr_[0][0] > arr_[1][0] ? (max = arr_[0][0],min = arr_[1][0], min_index = 1) : (max = arr_[1][0],min = arr_[0][0], min_index = 0)
+      if(max - min == 1) {
+        let res_0 = arr_[0].length == 1 && min_index == 1;
+        let res_1 = arr_[1].length == 1 && min_index == 0;
+        if(res_0 || res_1) {
+          return true
+        } else {
+          return false
+        }
+      } else {
+        return false;
+      }
+    }
+  }
+  const checkCharts = (word) => {
+    let obj = {};
+    for(let i in word) {
+      obj.hasOwnProperty(word[i]) ? (obj[word[i]] += 1) : (obj[word[i]] = 1)
+    }
+    return formatNums(Object.values(obj));
+  }
+  console.log('NO.5:', checkCharts('aacbbee'))
+}
+// GAMES 5 END
